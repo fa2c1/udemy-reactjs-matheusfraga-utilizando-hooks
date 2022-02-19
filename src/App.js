@@ -2,13 +2,21 @@ import React, { useState, useEffect } from "react";
 
 function App() {
 
-  const [tarefas, setTarefas] = useState([
-    'Pagar a conta de Luz',
-    'Estudar React Hooks'
-  ]);
-
+  // useStates
+  const [tarefas, setTarefas] = useState([]);
   const [input, setInput] = useState('');
 
+  // useEffect para carregar itens salvos no storage
+  useEffect(() => {
+    const tarefasStorage = localStorage.getItem('tarefas');
+
+    if(tarefasStorage){
+      setTarefas(JSON.parse(tarefasStorage));
+    }
+
+  }, []);
+
+  // useEffect para salvar no storage
   useEffect(() => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
   }, [tarefas])
